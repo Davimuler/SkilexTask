@@ -1,5 +1,6 @@
 import './App.css';
 import {ContentContainer} from "./Components/Content/ContentContainer";
+import {SidebarContainer} from "./Components/Sidebar/SidebarContainer";
 
 function App() {
     return (
@@ -9,7 +10,7 @@ function App() {
             </header>
             <div className="main">
                 <aside className="sidebar">
-                    Sidebar
+<SidebarContainer/>
                 </aside>
                 <main className="content">
                   <ContentContainer/>

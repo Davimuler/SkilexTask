@@ -1,0 +1,46 @@
+.Container{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.Input_Container {
+    margin-top:20px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap: 10px;
+}
+.horizontal_slider {
+    margin-top:20px;
+    margin-bottom: 20px;
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+}
+.Input {
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.thumb {
+    height: 30px;
+    width: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -11px;
+}
+.track {
+    background-color: #28a745;
+    height: 30%;
+    top: 50%;
+    border-radius: 4px;
+}
+
