@@ -1,4 +1,5 @@
 import './App.css';
+import {ContentContainer} from "./Components/Content/ContentContainer";
 
 function App() {
     return (
@@ -11,7 +12,7 @@ function App() {
                     Sidebar
                 </aside>
                 <main className="content">
-                   Main content
+                  <ContentContainer/>
                 </main>
             </div>
         </div>

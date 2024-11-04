@@ -1,0 +1,11 @@
+[33mcommit 189dbba78c8c68eee99c00fef93987914b35bb1a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Davimuler <davidbarba608@gmail.com>
+Date:   Mon Nov 4 12:17:18 2024 +0400
+
+    adding redux store
+
+[33mcommit 97b2ad60be43e336cc2c33bb371348acfadbb12d[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Davimuler <davidbarba608@gmail.com>
+Date:   Mon Nov 4 11:54:18 2024 +0400
+
+    Initial commit
