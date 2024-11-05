@@ -9,16 +9,20 @@ const Sidebar=(props)=>{
   const [selectedCategory, setSelectedCategory] = useState('');
   const brands = [...new Set(props.productsData.map(product => product.brand)) ];
   const categories= [...new Set(props.productsData.map(product => product.category))];
-
+  const prices = props.productsData.map(product => ({
+    name: product.name,
+    price: product.price
+  }));
+  console.log(props.filters.priceSlider);
   return <div>
-    <Rating/>
+    <Rating UpdateRate={props.UpdateRate}/>
     <Category
         options={categories}
-        selectedOption={selectedCategory}
-        onOptionSelect={setSelectedCategory}
+        selectedOption={props.filters.category}
+        onOptionSelect={props.UpdateCategory}
     />
-    <PriceSlider/>
-    <Brand options={brands}/>
+    <PriceSlider UpdatePriceSlider={props.UpdatePriceSlider} minPrice={props.filters.priceSlider.minPrice} maxPrice={props.filters.priceSlider.maxPrice} />
+    <Brand pickedBrands={props.filters.brands} UpdateBrands={props.UpdateBrands} options={brands}/>
   </div>
 
 

@@ -9,7 +9,7 @@ const Category = ({ options, selectedOption, onOptionSelect }) => {
                 onChange={(e) => onOptionSelect(e.target.value)}
                 className={S.select}
             >
-                <option value="">Category</option>
+                <option value="Category">Category</option>
                 {options.map((option) => (
                     <option key={option} value={option}>
                         {option}

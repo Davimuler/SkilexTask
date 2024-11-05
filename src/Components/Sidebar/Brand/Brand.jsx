@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux"; // Импортируйте useDispatch для работы с Redux
 import S from './Brand.module.css';
 
-const Brand = ({ options }) => {
+const Brand = ({ options, pickedBrands, UpdateBrands }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState(pickedBrands);
+    const dispatch = useDispatch();
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleCheckboxChange = (option) => {
-        setSelectedOptions((prevSelected) =>
-            prevSelected.includes(option)
+        setSelectedOptions((prevSelected) => {
+            const newSelected = prevSelected.includes(option)
                 ? prevSelected.filter((selected) => selected !== option)
-                : [...prevSelected, option]
-        );
+                : [...prevSelected, option];
+
+
+            dispatch(UpdateBrands(newSelected));
+
+            return newSelected;
+        });
     };
+
+    useEffect(() => {
+        setSelectedOptions(pickedBrands);
+    }, [pickedBrands]);
 
     return (
         <div className={S.checkboxDropdown}>
