@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import Content from "./Content";
+import GetFilteredProducts from "../../Redux/ProductsSelectors"
 
 const mapStateToProps = (state) => {
     return {
-        productsData: state.MainContent.productsData
+        productsData: GetFilteredProducts(state),
     }
 }
 

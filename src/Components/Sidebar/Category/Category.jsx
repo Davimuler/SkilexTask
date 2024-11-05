@@ -1,12 +1,21 @@
-import React from "react";
-import S from './Category.module.css'; // Import the same CSS module
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import S from './Category.module.css';
 
 const Category = ({ options, selectedOption, onOptionSelect }) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {}, [selectedOption]);
+
+    const handleOptionSelect = (e) => {
+        const selectedCategory = e.target.value;
+        dispatch(onOptionSelect(selectedCategory));
+    };
     return (
         <div className={S.categoryContainer}>
             <select
                 value={selectedOption}
-                onChange={(e) => onOptionSelect(e.target.value)}
+                onChange={handleOptionSelect}
                 className={S.select}
             >
                 <option value="Category">Category</option>

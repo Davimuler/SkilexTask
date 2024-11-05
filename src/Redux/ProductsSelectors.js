@@ -1,42 +1,36 @@
 import { createSelector } from "reselect";
 
-const getProducts = (state) => state.MainContent.productsData;
+export const getProducts = (state) => state.MainContent.productsData;
 
-const getFilters = (state) => {
-    return {
-        // category: state.products.category,
-        // priceRange: state.products.priceRange,
-        // selectedBrands: state.products.selectedBrands,
-        // sorting: state.products.sorting,
-    };
-};
+const getFilters = (state) => state.Sidebar.filters;
 
-
-const applyFilters = (products, filters) => {
-    return products.filter(product => {
-
-    });
-};
-
-
-const sortProducts = (products, sorting) => {
-    return [...products].sort((a, b) => {
-        switch (sorting) {
-            case "by rating":
-                return b.rating - a.rating;
-
-            default:
-                return 0;
-        }
-    });
-};
-
-
-export const getFilteredProductsSelector = createSelector(
-    getProducts,
-    getFilters,
+const GetFilteredProducts = createSelector(
+    [getProducts, getFilters],
     (products, filters) => {
-        const filteredProducts = applyFilters(products, filters);
-        return sortProducts(filteredProducts, filters);
+        const { category, brands, priceSlider, rate,search } = { ...filters };
+
+        const filteredProducts = products.filter((product) => {
+            const isCategoryMatched = category === 'Category'
+                ? true
+                : category
+                    ? product.category.trim().toLowerCase() === category.trim().toLowerCase()
+                    : true;
+            const isBrandMatched = brands.length > 0
+                ? brands.includes(product.brand)
+                : true;
+            const isPriceMatched = product.price >= priceSlider.minPrice && product.price <= priceSlider.maxPrice;
+
+            const isSearchMatched = search
+                ? product.name.toLowerCase().includes(search.toLowerCase())
+                : true;
+
+            return isCategoryMatched&&isBrandMatched&&isPriceMatched&&isSearchMatched;
+        });
+
+        const sortedProducts = rate ? filteredProducts.sort((a, b) => b.rating - a.rating) : filteredProducts;
+
+        return sortedProducts;
     }
 );
+
+export default GetFilteredProducts;

@@ -3,6 +3,7 @@ import Category from "./Category/Category";
 import Brand from "./Brand/Brand";
 import PriceSlider from "./PriceSlider/PriceSlider";
 import Rating from "./Rating/Rating";
+import Search from "./Search/Search";
 
 
 const Sidebar=(props)=>{
@@ -13,8 +14,8 @@ const Sidebar=(props)=>{
     name: product.name,
     price: product.price
   }));
-  console.log(props.filters.priceSlider);
   return <div>
+    <Search/>
     <Rating UpdateRate={props.UpdateRate}/>
     <Category
         options={categories}

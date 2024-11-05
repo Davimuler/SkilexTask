@@ -17,6 +17,7 @@ const Content=(props)=>{
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = props.productsData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(props.productsData.length / itemsPerPage);
+
   return<div className={S.content} >
     {!currentProducts.length?<NoResult  />:currentProducts.map(p=> <ProductItem id={p.id} image={p.imageUrl} brand={p.brand} rate={p.rating} name={p.name}  price={p.price} />)}
 
