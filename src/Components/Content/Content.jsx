@@ -1,41 +1,68 @@
-import React, {useState} from "react";
-import S from './Content.module.css'
+import React, { useState, useEffect } from "react";
+import S from './Content.module.css';
 import ProductItem from "./ProductItem/ProductItem";
+import {useDispatch} from "react-redux";
+import {UpdateIsLoading} from "../../Redux/SidebarReducer";
+import Spinner from "../Spinner/Spinner";
 
-const NoResult=(props)=>{
-  return<div >
-    No results found
-    {/*No results found "{props.Search}"*/}
-  </div>
+
+const NoResult = () => {
+  return <div>No results found</div>;
 }
 
-const Content=(props)=>{
-  
+const Content = (props) => {
+  const dispatch = useDispatch();
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+
+  const [showNoResults, setShowNoResults] = useState(false);
+
+  const itemsPerPage = 9;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = props.productsData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(props.productsData.length / itemsPerPage);
 
-  return<div className={S.content} >
-    {!currentProducts.length?<NoResult  />:currentProducts.map(p=> <ProductItem id={p.id} image={p.imageUrl} brand={p.brand} rate={p.rating} name={p.name}  price={p.price} />)}
+  useEffect(() => {
+    if (props.productsData.length === 0) {
+      dispatch(UpdateIsLoading(false));
+      setShowNoResults(true);
+    } else {
+      dispatch(UpdateIsLoading(false));
+      setShowNoResults(false);
+    }
+  }, [props.productsData]);
 
-      <div className={S.pagination}>
-        {Array.from({length: totalPages}, (_, index) => (
-            <button
-                key={index + 1}
-                onClick={() => setCurrentPage(index + 1)}
-                disabled={currentPage === index + 1}
-                className={currentPage === index + 1 ? S.active : ""}
-            >
-              {index + 1}
-            </button>
+  return (
+      <div className={S.content}>
+        {props.isLoading && !showNoResults &&  <Spinner isLoading={props.isLoading} />}
+        {!props.isLoading && showNoResults && <NoResult />}
+        {!props.isLoading && !showNoResults && currentProducts.map(p => (
+            <ProductItem
+                key={p.id}
+                id={p.id}
+                image={p.imageUrl}
+                brand={p.brand}
+                rate={p.rating}
+                name={p.name}
+                price={p.price}
+            />
         ))}
 
-    </div>
-  </div>
-
-
+        <div className={S.pagination}>
+          {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                  key={index + 1}
+                  onClick={() => setCurrentPage(index + 1)}
+                  disabled={currentPage === index + 1}
+                  className={currentPage === index + 1 ? S.active : ""}
+              >
+                {index + 1}
+              </button>
+          ))}
+        </div>
+      </div>
+  );
 }
-export default Content
+
+export default Content;

@@ -1,20 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import S from './Category.module.css';
+import { UpdateIsLoading } from "../../../Redux/SidebarReducer"; // Импортируем функцию для обновления состояния загрузки
 
 const Category = ({ options, selectedOption, onOptionSelect }) => {
+    const [selectedCategory, setSelectedCategory] = useState(selectedOption);
     const dispatch = useDispatch();
-
-    useEffect(() => {}, [selectedOption]);
 
     const handleOptionSelect = (e) => {
         const selectedCategory = e.target.value;
+        setSelectedCategory(selectedCategory);
+        dispatch(UpdateIsLoading(true));
         dispatch(onOptionSelect(selectedCategory));
     };
+
+    useEffect(() => {
+        if (selectedCategory !== selectedOption) {
+            dispatch(UpdateIsLoading(false));
+        }
+    }, [selectedCategory, selectedOption, dispatch]);
+
     return (
         <div className={S.categoryContainer}>
             <select
-                value={selectedOption}
+                value={selectedCategory}
                 onChange={handleOptionSelect}
                 className={S.select}
             >

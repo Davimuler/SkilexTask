@@ -1,23 +1,67 @@
+
 .content {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 16px;
+    padding: 20px;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .pagination button {
     margin: 0 5px;
     padding: 10px 15px;
     cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+.pagination button.active {
+    background-color: green;
+    color: white;
 }
 
 .pagination button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+    .content {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .pagination button {
+        width: 100%;
+        padding: 12px 0;
+    }
+}
+
+@media (max-width: 1024px) {
+    .content {
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .pagination {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .pagination button {
+        padding: 10px 15px;
+    }
 }

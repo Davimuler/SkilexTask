@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import S from './Brand.module.css';
 import useDebounce from "../../../hooks/useDebounce";
+import { UpdateBrands, UpdateIsLoading } from "../../../Redux/SidebarReducer";
 
 const Brand = ({ options, pickedBrands, UpdateBrands }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState(pickedBrands);
-    const debouncedBrands=useDebounce(selectedOptions,500)
+    const debouncedBrands = useDebounce(selectedOptions, 500);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(debouncedBrands){
+        dispatch(UpdateIsLoading(true));
+
+        if (debouncedBrands) {
             dispatch(UpdateBrands(debouncedBrands));
         }
-    }, [debouncedBrands,dispatch]);
+    }, [debouncedBrands, dispatch]);
+
+    useEffect(() => {
+        dispatch(UpdateIsLoading(false));
+    }, [selectedOptions, dispatch]);
+
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleCheckboxChange = (option) => {

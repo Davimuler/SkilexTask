@@ -1,0 +1,19 @@
+
+.sidebarButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+.sidebarButtonOpen {
+    transform: rotate(180deg);
+}
+
+.sidebarButtonClosed {
+    transform: rotate(0deg);
+}
+
+

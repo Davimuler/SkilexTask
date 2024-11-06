@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import S from './Search.module.css';
 import { useDispatch } from "react-redux";
-import { UpdateSearch } from "../../../Redux/SidebarReducer";
+import { UpdateSearch, UpdateIsLoading } from "../../../Redux/SidebarReducer";
 import useDebounce from "../../../hooks/useDebounce";
 
 const Search = (props) => {
@@ -10,8 +10,17 @@ const Search = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (searchText) {
+            dispatch(UpdateIsLoading(true));
+        }
         if (debouncedSearchText) {
             dispatch(UpdateSearch(debouncedSearchText));
+        }
+    }, [debouncedSearchText, dispatch, searchText]);
+
+    useEffect(() => {
+        if (debouncedSearchText === "") {
+            dispatch(UpdateIsLoading(false));
         }
     }, [debouncedSearchText, dispatch]);
 

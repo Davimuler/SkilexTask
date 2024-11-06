@@ -5,6 +5,7 @@ import GetFilteredProducts from "../../Redux/ProductsSelectors"
 const mapStateToProps = (state) => {
     return {
         productsData: GetFilteredProducts(state),
+        isLoading:state.Sidebar.isLoading,
     }
 }
 

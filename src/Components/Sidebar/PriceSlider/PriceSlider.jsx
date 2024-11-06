@@ -3,7 +3,7 @@ import ReactSlider from 'react-slider';
 import S from './PriceSlider.module.css';
 import useDebounce from "../../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
-import { UpdatePriceSlider } from "../../../Redux/SidebarReducer";
+import { UpdatePriceSlider, UpdateIsLoading } from "../../../Redux/SidebarReducer";
 
 const PriceSlider = (props) => {
     const [minPrice, setMinPrice] = useState(props.minPrice);
@@ -13,10 +13,16 @@ const PriceSlider = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(UpdateIsLoading(true));
+
         if (debouncedPrice) {
             dispatch(UpdatePriceSlider(debouncedPrice));
         }
     }, [debouncedPrice, dispatch]);
+
+    useEffect(() => {
+        dispatch(UpdateIsLoading(false));
+    }, [minPrice, maxPrice, dispatch]);
 
     useEffect(() => {
         setMinPrice(props.minPrice);
@@ -29,7 +35,7 @@ const PriceSlider = (props) => {
     };
 
     const handleMinPriceChange = (e) => {
-        const newValue =parseInt(e.target.value.replace(/[^0-9]/g, ''));
+        const newValue = parseInt(e.target.value.replace(/[^0-9]/g, ''));
         setMinPrice(newValue);
         if (newValue > maxPrice) {
             setMaxPrice(newValue);
@@ -37,7 +43,7 @@ const PriceSlider = (props) => {
     };
 
     const handleMaxPriceChange = (e) => {
-        const newValue =parseInt(e.target.value.replace(/[^0-9]/g, ''));
+        const newValue = parseInt(e.target.value.replace(/[^0-9]/g, ''));
         setMaxPrice(newValue);
         if (newValue < minPrice) {
             setMinPrice(newValue);

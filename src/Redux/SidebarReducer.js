@@ -3,8 +3,10 @@ const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 const UPDATE_PRICE_SLIDER='UPDATE_PRICE_SLIDER';
 const UPDATE_BRANDS='UPDATE_BRANDS';
 const UPDATE_SEARCH='UPDATE_SEARCH';
+const UPDATE_LOADING_STATUS='UPDATE_LOADING_STATUS';
 
 let InitialState = {
+    isLoading: true,
     filters: {
         search:'',
         category: 'Category',
@@ -19,6 +21,12 @@ let InitialState = {
 
 const SidebarReducer = (state = InitialState, action) => {
     switch (action.type) {
+        case UPDATE_LOADING_STATUS: {
+            return {
+                ...state,
+               isLoading: action.isLoading,
+            };
+        }
         case UPDATE_RATE: {
             return {
                 ...state,
@@ -75,5 +83,6 @@ export const UpdateCategory = (category) => ({ type: UPDATE_CATEGORY, category }
 export const UpdatePriceSlider = (priceSlider) => ({ type: UPDATE_PRICE_SLIDER, priceSlider });
 export const UpdateBrands = (brands) => ({ type: UPDATE_BRANDS, brands });
 export const UpdateSearch = (search) => ({ type: UPDATE_SEARCH, search });
+export const UpdateIsLoading = (IsLoading) => ({ type: UPDATE_LOADING_STATUS, IsLoading });
 
 export default SidebarReducer;
