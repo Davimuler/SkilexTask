@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import ReactSlider from 'react-slider';
 import S from './PriceSlider.module.css';
+import useDebounce from "../../../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { UpdatePriceSlider } from "../../../Redux/SidebarReducer";
 
 const PriceSlider = (props) => {
     const [minPrice, setMinPrice] = useState(props.minPrice);
     const [maxPrice, setMaxPrice] = useState(props.maxPrice);
+
+    const debouncedPrice = useDebounce({ minPrice, maxPrice }, 500);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (debouncedPrice) {
+            dispatch(UpdatePriceSlider(debouncedPrice));
+        }
+    }, [debouncedPrice, dispatch]);
 
     useEffect(() => {
         setMinPrice(props.minPrice);
@@ -14,34 +26,22 @@ const PriceSlider = (props) => {
     const handleSliderChange = ([newMin, newMax]) => {
         setMinPrice(newMin);
         setMaxPrice(newMax);
-        props.UpdatePriceSlider({ minPrice: newMin, maxPrice: newMax });
     };
 
     const handleMinPriceChange = (e) => {
-        const newValue = e.target.value.replace(/[^0-9]/g, '');
-        let parsedValue = newValue ? parseInt(newValue, 10) : 0;
-        if (parsedValue > 5000) {
-            parsedValue = 5000;
+        const newValue =parseInt(e.target.value.replace(/[^0-9]/g, ''));
+        setMinPrice(newValue);
+        if (newValue > maxPrice) {
+            setMaxPrice(newValue);
         }
-        setMinPrice(parsedValue);
-
-        if (parsedValue > maxPrice) {
-            setMaxPrice(parsedValue);
-        }
-        props.UpdatePriceSlider({ minPrice: parsedValue, maxPrice: parsedValue > maxPrice ? parsedValue : maxPrice });
     };
 
     const handleMaxPriceChange = (e) => {
-        const newValue = e.target.value.replace(/[^0-9]/g, '');
-        let parsedValue = newValue ? parseInt(newValue, 10) : 0;
-        if (parsedValue > 5000) {
-            parsedValue = 5000;
+        const newValue =parseInt(e.target.value.replace(/[^0-9]/g, ''));
+        setMaxPrice(newValue);
+        if (newValue < minPrice) {
+            setMinPrice(newValue);
         }
-        setMaxPrice(parsedValue);
-        if (parsedValue < minPrice) {
-            setMinPrice(parsedValue);
-        }
-        props.UpdatePriceSlider({ minPrice: parsedValue < minPrice ? parsedValue : minPrice, maxPrice: parsedValue });
     };
 
     return (

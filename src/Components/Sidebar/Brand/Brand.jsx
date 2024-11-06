@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux"; // Импортируйте useDispatch для работы с Redux
+import { useDispatch } from "react-redux";
 import S from './Brand.module.css';
+import useDebounce from "../../../hooks/useDebounce";
 
 const Brand = ({ options, pickedBrands, UpdateBrands }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState(pickedBrands);
+    const debouncedBrands=useDebounce(selectedOptions,500)
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(debouncedBrands){
+            dispatch(UpdateBrands(debouncedBrands));
+        }
+    }, [debouncedBrands,dispatch]);
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleCheckboxChange = (option) => {
@@ -14,9 +21,6 @@ const Brand = ({ options, pickedBrands, UpdateBrands }) => {
             const newSelected = prevSelected.includes(option)
                 ? prevSelected.filter((selected) => selected !== option)
                 : [...prevSelected, option];
-
-
-            dispatch(UpdateBrands(newSelected));
 
             return newSelected;
         });
