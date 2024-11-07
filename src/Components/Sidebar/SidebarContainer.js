@@ -6,8 +6,6 @@ const mapStateToProps = (state,ownProps) => {
     return {
         productsData: state.MainContent.productsData,
         filters: state.Sidebar.filters,
-        isSidebarOpen: ownProps.isSidebarOpen,
-        setIsSidebarOpen: ownProps.setIsSidebarOpen,
         isLoading:state.Sidebar.isLoading,
     }
 }

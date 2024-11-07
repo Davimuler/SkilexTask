@@ -4,8 +4,10 @@ const UPDATE_PRICE_SLIDER='UPDATE_PRICE_SLIDER';
 const UPDATE_BRANDS='UPDATE_BRANDS';
 const UPDATE_SEARCH='UPDATE_SEARCH';
 const UPDATE_LOADING_STATUS='UPDATE_LOADING_STATUS';
+const UPDATE_IS_SIDEBAR_OPENED='UPDATE_IS_SIDEBAR_OPENED';
 
 let InitialState = {
+    isSidebarOpened:true,
     isLoading: true,
     filters: {
         search:'',
@@ -36,6 +38,13 @@ const SidebarReducer = (state = InitialState, action) => {
                 }
             };
         }
+        case UPDATE_IS_SIDEBAR_OPENED: {
+            return {
+                ...state,
+                isSidebarOpened: action.isSidebarOpen
+            };
+        }
+
         case UPDATE_CATEGORY: {
             return {
                 ...state,
@@ -84,5 +93,6 @@ export const UpdatePriceSlider = (priceSlider) => ({ type: UPDATE_PRICE_SLIDER, 
 export const UpdateBrands = (brands) => ({ type: UPDATE_BRANDS, brands });
 export const UpdateSearch = (search) => ({ type: UPDATE_SEARCH, search });
 export const UpdateIsLoading = (IsLoading) => ({ type: UPDATE_LOADING_STATUS, IsLoading });
+export const UpdateIsSidebarOpened = (isSidebarOpen) => ({ type: UPDATE_IS_SIDEBAR_OPENED, isSidebarOpen });
 
 export default SidebarReducer;

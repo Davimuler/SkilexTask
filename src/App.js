@@ -1,15 +1,14 @@
 import './App.css';
 import { ContentContainer } from "./Components/Content/ContentContainer";
 import { SidebarContainer } from "./Components/Sidebar/SidebarContainer";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const isSidebarOpen = useSelector((state) => state.Sidebar.isSidebarOpened);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
 
+     console.log("RENDER");
     return (
         <div className="App">
             <header className="header">
@@ -17,7 +16,7 @@ function App() {
             </header>
             <div className="main">
                 <aside className={`sidebar ${!isSidebarOpen ? 'collapsed' : ''}`}>
-                    <SidebarContainer isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
+                    <SidebarContainer isSidebarOpen={isSidebarOpen} />
                 </aside>
                 <main className={`content ${!isSidebarOpen ? 'expanded' : ''}`}>
                     <ContentContainer />

@@ -5,18 +5,21 @@ import PriceSlider from "./PriceSlider/PriceSlider";
 import Rating from "./Rating/Rating";
 import Search from "./Search/Search";
 import S from "./Sidebar.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import { UpdateIsSidebarOpened} from "../../Redux/SidebarReducer";
 
 const Sidebar = (props) => {
+    const dispatch = useDispatch();
+    const isSidebarOpen = useSelector((state) => state.Sidebar.isSidebarOpened);
   const brands = [...new Set(props.productsData.map((product) => product.brand))];
   const categories = [
     ...new Set(props.productsData.map((product) => product.category)),
   ];
-
   return (
       <div>
           <button
               onClick={() => {
-                  props.setIsSidebarOpen(!props.isSidebarOpen);
+                  dispatch(UpdateIsSidebarOpened(!isSidebarOpen));
               }}
               className={`${S.sidebarButton} ${
                   props.isSidebarOpen ? S.sidebarButtonOpen : S.sidebarButtonClosed

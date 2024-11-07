@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import S from './Brand.module.css';
 import useDebounce from "../../../hooks/useDebounce";
@@ -10,6 +10,22 @@ const Brand = ({ options, pickedBrands, UpdateBrands }) => {
     const debouncedBrands = useDebounce(selectedOptions, 500);
     const dispatch = useDispatch();
 
+    // Реф для сохранения предыдущего значения pickedBrands
+    const prevPickedBrandsRef = useRef();
+
+    // Эффект для обновления selectedOptions только если pickedBrands изменился
+    useEffect(() => {
+        console.log("updated")
+        if (prevPickedBrandsRef.current !== pickedBrands) {
+            // Обновляем только если pickedBrands изменился
+            if (JSON.stringify(selectedOptions) !== JSON.stringify(pickedBrands)) {
+                setSelectedOptions(pickedBrands);
+            }
+            prevPickedBrandsRef.current = pickedBrands; // Обновляем реф с текущим значением pickedBrands
+        }
+    }, [pickedBrands, selectedOptions]);
+
+    // Эффект для вызова UpdateBrands с использованием debouncedBrands
     useEffect(() => {
         dispatch(UpdateIsLoading(true));
 
@@ -33,10 +49,6 @@ const Brand = ({ options, pickedBrands, UpdateBrands }) => {
             return newSelected;
         });
     };
-
-    useEffect(() => {
-        setSelectedOptions(pickedBrands);
-    }, [pickedBrands]);
 
     return (
         <div className={S.checkboxDropdown}>

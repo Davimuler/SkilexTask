@@ -26,6 +26,7 @@ const Category = ({ options, selectedOption, onOptionSelect }) => {
                 value={selectedCategory}
                 onChange={handleOptionSelect}
                 className={S.select}
+                data-testid="category-filter"
             >
                 <option value="Category">Category</option>
                 {options.map((option) => (

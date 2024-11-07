@@ -4,7 +4,7 @@ import S from './Spinner.module.css';
 
 const Spinner = ({ isLoading }) => {
     return (
-        <div className={S.spinnerContainer}>
+        <div className={S.spinnerContainer} data-testid="spinner">
             {isLoading && <ClipLoader size={50} color={"#28a745"} loading={isLoading} />}
         </div>
     );

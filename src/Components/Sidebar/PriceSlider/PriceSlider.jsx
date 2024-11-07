@@ -1,33 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import ReactSlider from 'react-slider';
 import S from './PriceSlider.module.css';
-import useDebounce from "../../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
-import { UpdatePriceSlider, UpdateIsLoading } from "../../../Redux/SidebarReducer";
+import {UpdatePriceSlider} from "../../../Redux/SidebarReducer";
 
-const PriceSlider = (props) => {
+const PriceSlider =  memo((props) => {
     const [minPrice, setMinPrice] = useState(props.minPrice);
     const [maxPrice, setMaxPrice] = useState(props.maxPrice);
 
-    const debouncedPrice = useDebounce({ minPrice, maxPrice }, 500);
+
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(UpdateIsLoading(true));
-
-        if (debouncedPrice) {
-            dispatch(UpdatePriceSlider(debouncedPrice));
-        }
-    }, [debouncedPrice, dispatch]);
-
-    useEffect(() => {
-        dispatch(UpdateIsLoading(false));
-    }, [minPrice, maxPrice, dispatch]);
-
-    useEffect(() => {
-        setMinPrice(props.minPrice);
-        setMaxPrice(props.maxPrice);
-    }, [props.minPrice, props.maxPrice]);
 
     const handleSliderChange = ([newMin, newMax]) => {
         setMinPrice(newMin);
@@ -77,8 +60,11 @@ const PriceSlider = (props) => {
                 minDistance={1}
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
             />
+            <div className={S.ButtonContainer}>
+                <button onClick={()=>{dispatch(UpdatePriceSlider({minPrice,maxPrice}));}} className={S.Button}>Ok</button>
+            </div>
         </div>
     );
-};
+});
 
 export default PriceSlider;
