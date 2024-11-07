@@ -1,59 +1,34 @@
 .categoryContainer {
-    margin-left: -20px;
     width: 100%;
+    max-width: 400px;
     background-color: #f0f0f0;
     position: relative;
-    padding: 0.5rem 1rem; /* Уменьшаем отступы сверху и снизу */
+    padding: 10px;
     box-sizing: border-box;
 }
-
 .select {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 0.5rem;
     border: none;
     background: transparent;
     font-size: 1rem;
     cursor: pointer;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    appearance: none; /* Убираем стандартную стрелочку */
-    -webkit-appearance: none; /* Для Safari */
-    -moz-appearance: none; /* Для Firefox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
-
-/* Адаптивность для различных устройств */
-
-/* Для мобильных устройств */
-@media (max-width: 600px) {
-    .categoryContainer {
-        padding: 0.5rem 1rem; /* Уменьшаем отступы */
-        margin-left: -5px;
-    }
-    .select {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* Для планшетов */
 @media (max-width: 768px) {
     .categoryContainer {
-        padding: 0.5rem 1rem; /* Уменьшаем отступы сверху и снизу */
-        margin-left: -5px;
+        max-width: 80%;
+        margin-left: -9px;
     }
-    .select {
-        padding: 0.5rem 0.8rem;
-        font-size: 1rem;
-        width: 100%; /* Убедимся, что выпадающий список растягивается на всю ширину */
-    }
-}
 
-/* Для больших экранов */
-@media (min-width: 1200px) {
+}
+@media (max-width: 480px) {
     .categoryContainer {
-        padding: 1rem 1.5rem; /* Увеличиваем отступы для больших экранов */
+        max-width: 90%;
+        margin-left: 3px;
     }
-    .select {
-        padding: 1rem 1.2rem;
-        font-size: 1.1rem;
-    }
+
 }

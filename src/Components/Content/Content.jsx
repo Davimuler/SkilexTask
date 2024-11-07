@@ -6,8 +6,8 @@ import {UpdateIsLoading} from "../../Redux/SidebarReducer";
 import Spinner from "../Spinner/Spinner";
 
 
-const NoResult = () => {
-  return <div>No results found</div>;
+const NoResult = (props) => {
+  return <div className={S.noResultMessage}>No results found for "{props.search}"</div>;
 }
 
 const Content = (props) => {
@@ -31,12 +31,12 @@ const Content = (props) => {
       dispatch(UpdateIsLoading(false));
       setShowNoResults(false);
     }
-  }, [props.productsData]);
+  }, [props.productsData,dispatch]);
 
   return (
       <div className={S.content}>
         {props.isLoading && !showNoResults &&  <Spinner isLoading={props.isLoading} />}
-        {!props.isLoading && showNoResults && <NoResult />}
+        {!props.isLoading && showNoResults && <NoResult search={props.search}/>}
         {!props.isLoading && !showNoResults && currentProducts.map(p => (
             <ProductItem
                 key={p.id}

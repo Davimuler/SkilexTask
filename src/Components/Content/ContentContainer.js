@@ -6,6 +6,7 @@ const mapStateToProps = (state) => {
     return {
         productsData: GetFilteredProducts(state),
         isLoading:state.Sidebar.isLoading,
+        search:state.Sidebar.filters.search
     }
 }
 

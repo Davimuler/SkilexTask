@@ -1,6 +1,6 @@
 import React from "react";
 import { ClipLoader } from "react-spinners";
-import S from './Spinner.module.css'; // Можно стилизовать контейнер спиннера
+import S from './Spinner.module.css';
 
 const Spinner = ({ isLoading }) => {
     return (

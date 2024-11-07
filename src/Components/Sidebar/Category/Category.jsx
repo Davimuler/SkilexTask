@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import S from './Category.module.css';
-import { UpdateIsLoading } from "../../../Redux/SidebarReducer"; // Импортируем функцию для обновления состояния загрузки
+import { UpdateIsLoading } from "../../../Redux/SidebarReducer";
 
 const Category = ({ options, selectedOption, onOptionSelect }) => {
     const [selectedCategory, setSelectedCategory] = useState(selectedOption);

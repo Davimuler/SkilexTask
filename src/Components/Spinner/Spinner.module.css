@@ -2,5 +2,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Это сделает контейнер спиннера по высоте экрана */
+    height: 100vh;
 }
